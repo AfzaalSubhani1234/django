@@ -17,6 +17,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+AUTH_USER_MODEL='accounts.User'
+
 CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
@@ -67,27 +69,29 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "mssql",
+        "NAME": "BlogDB",
+        "HOST": r"localhost\SQLEXPRESS",
+        "OPTIONS": {
+            "driver": "ODBC Driver 18 for SQL Server",
+            "trusted_connection": "yes",
+            "extra_params": "TrustServerCertificate=yes",
+        },
     }
 }
 
 # Django REST Framework
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        # Example:
-        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        # Example:
-        # 'rest_framework.permissions.IsAuthenticated',
-    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    ),
 }
-
 # Password validation
 
 AUTH_PASSWORD_VALIDATORS = [
