@@ -1,5 +1,34 @@
-from django.shortcuts import render
+from rest_framework import viewsets
+from .models import Category, Tag, Post, Comment, Like
+from .serializers import (
+    CategorySerializer,
+    TagSerializer,
+    PostSerializer,
+    CommentSerializer,
+    LikeSerializer,
+)
 
-# Create your views here.
-def post_list():
-    pass
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+
+class LikeViewSet(viewsets.ModelViewSet):
+    queryset = Like.objects.all()
+    serializer_class = LikeSerializer
